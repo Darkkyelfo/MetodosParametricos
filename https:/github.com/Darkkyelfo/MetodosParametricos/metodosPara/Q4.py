@@ -46,11 +46,14 @@ classes = np.array(classes)
 erro = 0
 
 claPredita = []
+cont = 0
 for train_index, test_index in kf.split(base):
     X_train, X_test = base[train_index], base[test_index]
     y_train, y_test = classes[train_index], classes[test_index]
     claPredita = classificar(m1, m2, mCov , mCov , X_test)
     erro = (1-accuracy_score(y_test,claPredita)) + erro
+    print("erro fold %s: %s"%(cont,1-accuracy_score(y_test,claPredita)))
+    cont+=1
     
-print(erro/10)
+print("erro geral:%s"%(erro/10))
 
