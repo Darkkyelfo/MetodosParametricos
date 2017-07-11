@@ -9,7 +9,30 @@ from sklearn.model_selection import KFold
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.naive_bayes import GaussianNB
-from funcoes import *
+
+
+def pCondicional(pXcy,pClasse,pX):
+    return float(pXcy * pClasse)/pX
+
+def separarRegiao(pC1xy,pC2xy):
+    r1 = []
+    r2 = []
+    for i,j in enumerate(pC1xy):
+        if(pC1xy[i]>pC2xy[i]):
+            r1.append(i)
+        else:
+            r2.append(i)
+    return r1,r2
+
+def calcularErro(r1,r2,pxC1,pxC2,pc1,pc2):
+    erro1 = 0
+    erro2 = 0
+    for i in r2:
+        erro1 += pxC1[i]
+    for i in r1:
+        erro2 +=pxC2[i] 
+    erro = pc1*erro1 + pc2*erro2
+    return erro
 
 base = []
 classes = []

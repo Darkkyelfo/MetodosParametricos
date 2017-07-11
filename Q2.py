@@ -47,20 +47,21 @@ erroGnd = 0
 base = np.array(base)
 
 classes = np.array(classes)
+cont = 1
 for train_index, test_index in kf.split(base):
     X_train, X_test = base[train_index], base[test_index]
     y_train, y_test = classes[train_index], classes[test_index]
     #knn
     knn.fit(X_train , y_train)
     knnPredict = knn.predict(X_test )
-    print("fold knn:", 1-accuracy_score(y_test,knnPredict))
+    print("fold%s 1nn:%s" %(cont,(1-accuracy_score(y_test,knnPredict))))
     erroKnn = (1-accuracy_score(y_test,knnPredict)) + erroKnn
     #bayes
     gnd.fit(X_train , y_train)
     gndPredict = gnd.predict(X_test )
-    print("fold gnd:", 1-accuracy_score(y_test,gndPredict))
+    print("fold%s gnd:%s" %(cont,(1-accuracy_score(y_test,gndPredict))))
     erroGnd = (1-accuracy_score(y_test,gndPredict))  + erroGnd
-    print("\n")
+    cont+=1
     
 print("Taxa de erro knn:",erroKnn/10)
 print("Taxa de erro gnd:",erroGnd/10)
